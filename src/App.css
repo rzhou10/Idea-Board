@@ -1,19 +1,41 @@
 * {
-  font-style: "Franklin Gothic"
+    font-style: "Franklin Gothic"
+}
+  
+input{
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 10px;
+    margin: 5px 0px;
 }
 
-input{
-    display: block;
+form {
+    margin-top: 100px;
+    margin-left: 9px;
 }
 
 .addIdea{
     float: left;
     border: none;
-    padding: 7px 20px;
-    border-radius: 10px;
+    background-color: #554040;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 100%;
+}
+
+.ideas{
+    float: left;
+    background-color: #EEE794;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 75%;
+    height: 100%;
 }
 
 .specificIdea{
     background-color: gold;
-    font-style: 'Futura';
+    font-style: "Futura";
 }

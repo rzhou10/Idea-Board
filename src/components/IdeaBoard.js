@@ -12,7 +12,7 @@ class IdeaBoard extends Component {
     }
 
     componentDidMount(){
-        axios.get(`http://localhost:4000/`).then((data) =>
+        axios.get("http://localhost:4000/").then((data) =>
             this.setState( { ideas: data } )
         )
     }
@@ -21,40 +21,39 @@ class IdeaBoard extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    addIdea = () => {
+    addIdea = (e) => {
+        e.preventDefault();
         const reqBody = {
             "idea": this.state.idea,
             "description": this.state.description,
         }
 
         let sliced = this.state.ideas.slice();
-        axios.post(`http://localhost:4000/add`, reqBody).then(
+        axios.post("http://localhost:4000/add", reqBody).then(
             () => {
                 sliced.push(reqBody);
-                this.setState({ideas: sliced})
+                this.setState({ ideas: sliced })
             }
         );
     }
 
     removeIdea = (props) => {
         let sliced = this.state.ideas.slice();
-        axios.delete(`http://localhost:4000/` + props._id).then(
+        axios.delete("http://localhost:4000/" + props._id).then(
             () => {
+                //only keeps those that don't match the criteria
                 let filtered = sliced.filter((val) => {
                     return val !== props;
                 });
-                this.setState({ideas: filtered});
+                this.setState({ ideas: filtered });
             }
         )
     }
 
-    editIdea = (props) => {
-        axios.patch(`http://localhost:4000/` + props._id);
-    }
-
     render(){
         return(
-            <div>
+            <div className="table">
+            <div className="row"></div>
                 <div className="addIdea">
                     <form onSubmit={this.addIdea}>
                         <label>
@@ -69,7 +68,7 @@ class IdeaBoard extends Component {
                 <div className="ideas">
                     {this.state.ideas.map((idea) => 
                         <div key={idea._id} className="specificIdea">
-                            <div className="changeStuff"><button onClick={this.editIdea(idea)}></button> <button onClick={this.removeIdea(idea)}></button></div>
+                            <div className="changeStuff"><a href="/edit">Edit</a> <button onClick={this.removeIdea(idea)}></button></div>
                             <p>{idea.idea}</p>
                             <p>{idea.description}</p>
                         </div>

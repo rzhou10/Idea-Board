@@ -33,35 +33,13 @@ router.post("/add", async (req, res) => {
         const newIdea = await ideaData.addIdea(title, description);
     }
     catch (err){
-        res.status(500).json({route: "get", error: err});
+        res.status(500).json({route: "add", error: err});
     }
 });
 
-router.patch("/:id", async (req, res) => {
-    const info = req.body;
-
-    if (!info){
-        res.status(400).json({ error: "Data is needed" });
-    }
-    if (!info.title){
-        res.status(400).json({ error: "Title is needed" });
-    }
-    if (!info.description){
-        res.status(400).json({ error: "description list is needed" });
-    }
+router.delete("/delete/:id", async (req, res) => {
     try{
-        const idea = await ideaData.editIdea(req.params.id, info);
-        res.json(idea);
-    }
-    catch (err){
-
-    }
-    
-});
-
-router.delete("/:id", async (req, res) => {
-    try{
-        ideaData.deleteIdea(req.params.id);
+        const deleteIdea = await ideaData.deleteIdea(req.params.id);
     }
     catch (err){
         res.status(500).json({route: "delete/:id", error: err});

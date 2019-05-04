@@ -6,9 +6,9 @@ const configRoutes = require("./routes");
 const cors = require("cors");
 const pages = express.static(__dirname + "/public");
 
+app.use(cors());
 app.use("/", pages);
 app.use(bodyParser.json());
-app.use(cors());
 configRoutes(app);
 app.use(bodyParser.urlencoded({ extended: true }));
 

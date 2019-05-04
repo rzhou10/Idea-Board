@@ -4,18 +4,7 @@ const uuid = require("uuid/v4");
 
 async function getAllIdeas(){
     const ideaCollection = await ideas();
-
     return await ideaCollection.find({}).toArray();
-}
-
-async function getIdeaById(id){
-    if (!id){
-        throw "An id is needed for searching.";
-    }
-    let collection = await ideas();
-    const specific = await collection.findOne({_id: id}).toArray();
-
-    return specific;
 }
 
 async function addIdea(title, descripton){
@@ -60,33 +49,8 @@ async function deleteIdea(id) {
     }
 }
 
-async function editIdea(id, patchedIdea){
-    if (!id){
-        throw "An id is needed for editing.";
-    }
-    if (typeof id !== "string"){
-        throw "id needs to be a string.";
-    }
-
-    let newCollection = await ideas();
-
-    let collection = await getIdeaById(id);
-
-    if (patchedIdea.title !== collection.title){
-        collection.title = patchedIdea.title;
-    }
-    if (patchedIdea.descripton !== collection.descripton){
-        collection.descripton = patchedIdea.descripton;
-    }
-
-    const idea = await newCollection.update({_id: id}, {$set: collection});
-    return;
-}
-
 module.exports = {
     getAllIdeas,
-    getIdeaById,
     addIdea,
-    deleteIdea,
-    editIdea
+    deleteIdea
 }

@@ -12,11 +12,12 @@ class IdeaBoard extends Component {
     }
 
     componentDidMount(){
-        axios.get("http://localhost:4000/").then((data) =>
-            this.setState( { ideas: data } )
+        axios.get("http://localhost:4000/").then((data) =>{
+            //this.setState({ ideas: data.data });
+            console.log(data)
+        }
         )
         .catch(err => {
-            console.log(err);
             throw err;
         });
     }
@@ -40,23 +41,26 @@ class IdeaBoard extends Component {
             }
         )
         .catch(err => {
-            console.log(err);
             throw err;
         });
     }
 
-    // removeIdea = (props) => {
-    //     let sliced = this.state.ideas.slice();
-    //     axios.delete("http://localhost:4000/" + props._id).then(
-    //         () => {
-    //             //only keeps those that don't match the criteria
-    //             let filtered = sliced.filter((val) => {
-    //                 return val !== props;
-    //             });
-    //             this.setState({ ideas: filtered });
-    //         }
-    //     )
-    // }
+    removeIdea = (props) => {
+        let sliced = this.state.ideas.slice();
+        axios.delete("http://localhost:4000/delete" + props._id).then(
+            () => {
+                //only keeps those that don't match the criteria
+                let keptIdeas = sliced.filter((val) => {
+                    return val !== props;
+                });
+                this.setState({ ideas: keptIdeas });
+            }
+        )
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+    }
 
     render(){
         return(
@@ -76,11 +80,10 @@ class IdeaBoard extends Component {
                 <div className="ideas">
                     {this.state.ideas.map((idea) => 
                         <div key={idea._id} className="specificIdea">
-                            <div className="changeStuff"><a href="/edit">Edit</a> {/*<button onClick={this.removeIdea(idea)}></button>*/}</div>
+                            <div className="changeStuff"> <button onClick={this.removeIdea(idea)}></button></div>
                             <p>{idea.idea}</p>
                             <p>{idea.description}</p>
                         </div>
-                        
                     )}
                 </div>
             </div>

@@ -19,6 +19,7 @@ form {
     border: none;
     background-color: #554040;
     position: fixed;
+    display: block;
     top: 0;
     left: 0;
     width: 25%;
